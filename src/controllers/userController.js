@@ -147,7 +147,7 @@ export const postEdit = async (req, res) => {
   const pageTitle = "Edit Profile";
   const {
     session: {
-      user: { _id },
+      user: { _id, avatarUrl },
     },
     body: { name, email, username, location },
     file,
@@ -172,6 +172,7 @@ export const postEdit = async (req, res) => {
     const updateUser = await User.findByIdAndUpdate(
       _id,
       {
+        avatarUrl: file ? file.path : avatarUrl,
         name,
         email,
         username,
@@ -184,7 +185,7 @@ export const postEdit = async (req, res) => {
   } catch (error) {
     return res.status(400).render("edit-profile", {
       pageTitle,
-      errorMessage: "email or username is already taken",
+      errorMessage: "Something Wrong!",
     });
   }
 };
@@ -219,7 +220,6 @@ export const postChangePassword = async (req, res) => {
   const user = await User.findById(_id);
   user.password = newPassword;
   await user.save();
-  // req.session.user.password = user.password;
   return res.redirect("/users/logout");
 };
 export const see = (req, res) => res.send("see user");
