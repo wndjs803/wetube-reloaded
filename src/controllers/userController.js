@@ -144,31 +144,46 @@ export const getEdit = (req, res) => {
   return res.render("edit-profile", { pageTitle: "Edit Profile" });
 };
 export const postEdit = async (req, res) => {
+  const pageTitle = "Edit Profile";
   const {
     session: {
       user: { _id },
     },
     body: { name, email, username, location },
   } = req;
+  const foundUserByEmail = await User.findOne({ email: email });
+  const foundUserByUsername = await User.findOne({ username: username });
 
-  const updateUser = await User.findByIdAndUpdate(
-    _id,
-    {
-      name,
-      email,
-      username,
-      location,
-    },
-    { new: true }
-  );
-  req.session.user = updateUser;
-  // req.session.user = {
-  //   ...req.session.user,
-  //   name,
-  //   email,
-  //   username,
-  //   location,
-  // };
-  return res.redirect("/users/edit");
+  if (foundUserByEmail !== null && foundUserByEmail.id !== _id) {
+    return res.status(400).render("edit-profile", {
+      pageTitle,
+      errorMessage: "email is already exist",
+    });
+  }
+  if (foundUserByUsername !== null && foundUserByUsername.id !== _id) {
+    return res.status(400).render("edit-profile", {
+      pageTitle,
+      errorMessage: "username is already exist",
+    });
+  }
+  try {
+    const updateUser = await User.findByIdAndUpdate(
+      _id,
+      {
+        name,
+        email,
+        username,
+        location,
+      },
+      { new: true }
+    );
+    req.session.user = updateUser;
+    return res.redirect("/users/edit");
+  } catch (error) {
+    return res.status(400).render("edit-profile", {
+      pageTitle,
+      errorMessage: "email or username is already taken",
+    });
+  }
 };
 export const see = (req, res) => res.send("see user");
