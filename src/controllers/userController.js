@@ -1,4 +1,5 @@
 import User from "../models/User";
+import Video from "../models/Video";
 import bcrypt from "bcrypt";
 import fetch from "node-fetch";
 
@@ -222,12 +223,14 @@ export const postChangePassword = async (req, res) => {
   await user.save();
   return res.redirect("/users/logout");
 };
+
 export const see = async (req, res) => {
   const { id } = req.params;
   const user = await User.findById(id);
   if (!user) {
     return res.status(404).render("404", { pageTitle: "not found" });
   }
+  const videos = await Video.find({ owner: user._id });
   const pageTitle = `${user.name}'s Profile`;
-  return res.render("users/profile", { pageTitle, user });
+  return res.render("users/profile", { pageTitle, user, videos });
 };
