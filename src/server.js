@@ -24,6 +24,7 @@ app.use(
 );
 app.use(localMiddleware);
 app.use("/upload", express.static("upload"));
+app.use("/assets", express.static("assets"));
 app.use("/", rootRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
