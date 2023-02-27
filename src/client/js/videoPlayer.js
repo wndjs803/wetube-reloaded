@@ -36,6 +36,11 @@ const handleVolumeChange = (event) => {
     video.muted = false;
     muteBtn.innerText = "Mute";
   }
+  if (video.volume === 0) {
+    muteBtn.innerText = "Unmute";
+  } else {
+    muteBtn.innerText = "Mute";
+  }
 };
 
 playBtn.addEventListener("click", handlePlayClick);
