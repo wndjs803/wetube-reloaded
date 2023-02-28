@@ -46,7 +46,9 @@ const handleVolumeChange = (event) => {
 };
 
 const formatTime = (seconds) => {
-  new Date(seconds * 1000).toISOString().substring(11, 19);
+  if (seconds >= 3600)
+    return new Date(seconds * 1000).toISOString().substring(11, 19);
+  else return new Date(seconds * 1000).toISOString().substring(14, 19);
 };
 
 const handleLoadedMetaData = () => {
@@ -58,9 +60,16 @@ const handleTimeUpdate = () => {
   currentTime.innerText = formatTime(Math.floor(video.currentTime));
   timeline.value = Math.floor(video.currentTime);
 };
+
+const handleTimelineInput = (event) => {
+  const {
+    target: { value },
+  } = event;
+  video.currentTime = value;
+};
 playBtn.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click", handleMute);
 volumeRange.addEventListener("input", handleVolumeChange);
 video.addEventListener("loadedmetadata", handleLoadedMetaData);
 video.addEventListener("timeupdate", handleTimeUpdate);
-timeline;
+timeline.addEventListener("input", handleTimelineInput);
