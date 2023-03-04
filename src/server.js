@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import session from "express-session";
+import flash from "express-flash";
 import MongoStore from "connect-mongo";
 import rootRouter from "./routers/rootRouter";
 import videoRouter from "./routers/videoRouter";
@@ -29,6 +30,7 @@ app.use(
   })
 );
 app.use(localMiddleware);
+app.use(flash());
 app.use("/upload", express.static("upload"));
 app.use("/assets", express.static("assets"));
 app.use("/", rootRouter);
