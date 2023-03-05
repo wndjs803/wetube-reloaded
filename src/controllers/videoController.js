@@ -139,4 +139,5 @@ export const registerView = async (req, res) => {
 
 export const createComment = (req, res) => {
   console.log(req.body);
+  return res.send("w");
 };

@@ -1,4 +1,4 @@
-import express from "express";
+import express, { text } from "express";
 import morgan from "morgan";
 import session from "express-session";
 import flash from "express-flash";
@@ -21,6 +21,7 @@ app.use((req, res, next) => {
 });
 app.use(logger);
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(
   session({
     secret: process.env.COOKIE_SECRET,
