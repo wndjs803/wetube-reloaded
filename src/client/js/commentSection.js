@@ -6,7 +6,7 @@ const handleSubmit = (event) => {
   const textarea = form.querySelector("textarea");
   const text = textarea.value;
   const videoId = videoContainer.dataset.id;
-  if (text == "") {
+  if (text === "") {
     return;
   }
   fetch(`/api/videos/${videoId}/comment`, {
@@ -16,6 +16,7 @@ const handleSubmit = (event) => {
     },
     body: JSON.stringify({ text }),
   });
+  textarea.value = "";
 };
 
 if (form) {
