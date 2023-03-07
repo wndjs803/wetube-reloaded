@@ -8,9 +8,11 @@
   },
   "scripts": {
     "start": "node build/init.js",
-    "build:server": "babel src -d build",
+    "build": "npm run build:server && npm run build:asset",
+    "build:server": "babel src -d build --ignore src/client",
+    "build:asset": "webpack --mode=production",
     "dev:server": "nodemon",
-    "dev:asset": "webpack --config webpack.config.js"
+    "dev:asset": "webpack --mode=development -w"
   },
   "author": "",
   "license": "MIT",
