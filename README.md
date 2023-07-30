@@ -25,4 +25,4 @@
 
 # 3. 기술 스택
 
-`![Static Badge](https://img.shields.io/badge/:badgeContent)`
+![JavaScript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
